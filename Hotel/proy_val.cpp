@@ -268,7 +268,84 @@ void muros6P(float largo,float prof){
 	fig2.prisma(73,largo,prof,muro.GLindex);
 }
 void elevator(){
-	fig2.prisma(8,12,7.5,elevador.GLindex);
+	
+	glPushMatrix();//techo y piso cabina elevador
+		glTranslatef(0,3.75,0);
+		fig2.prisma(0.5,12,8,elevador.GLindex);
+		glTranslatef(0,-7.5,0);
+		fig2.prisma(0.5,12,8,elevador.GLindex);
+	glPopMatrix();
+		
+	glPushMatrix();//costados de las cabina
+		glTranslatef(-5.75,0,0);
+		fig2.prisma(7,0.5,8,elevador.GLindex);
+		glTranslatef(11.5,0,0);
+		fig2.prisma(7,0.5,8,elevador.GLindex);
+	glPopMatrix();
+
+	glPushMatrix();//animación de las puertas de la cabina
+		if(movelevador==poselevador && movelevador==4){
+	
+		}else if(movelevador==poselevador && movelevador==14){
+			glTranslatef(0,0,3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}else if(movelevador==poselevador && movelevador==24){
+			glTranslatef(0,0,3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}else if(movelevador==poselevador && movelevador==34){
+			glTranslatef(0,0,3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}else if(movelevador==poselevador && movelevador==44){
+			glTranslatef(0,0,3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}else if(movelevador==poselevador && movelevador==54){
+			glTranslatef(0,0,3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}else if(movelevador==poselevador && movelevador==64){
+			glTranslatef(0,0,3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}else{
+			glTranslatef(0,0,-3.75);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(-3,0,0);
+			glTranslatef(0,0,7.5);
+			fig2.prisma(7,1,0.5,negro.GLindex);
+			glTranslatef(-3,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+			glTranslatef(6,0,0);
+			fig2.prisma(7,5,0.5,elevador.GLindex);
+		}
+		
+	glPopMatrix();
+
 }
 /*
 Función para los muros de la parte 1, ya que aqui pongo 3 metros para la
