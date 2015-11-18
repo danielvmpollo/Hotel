@@ -112,6 +112,7 @@ CTexture vent;
 CTexture muro;
 CTexture p1;//puertas
 CTexture p2;
+CTexture E1;
 CTexture audit;
 CTexture techo;
 CTexture elevador;
@@ -185,6 +186,10 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	p2.LoadTGA("Texturas/p3.tga");
 	p2.BuildGLTexture();
 	p2.ReleaseImage();
+
+	E1.LoadTGA("Texturas/E5.tga");
+	E1.BuildGLTexture();
+	E1.ReleaseImage();
 
 
 	audit.LoadTGA("Texturas/a2.tga");
@@ -942,17 +947,34 @@ void muros(){
 		glPushMatrix();
 			glTranslatef(19.5,0,46);
 			ventanaPorPisoCh(0.5,10);//vent vert
-		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(15.5,30,55);
-			glRotatef(-45,0,1.0,0);
-			ventana3pisosConPuerta(0.5,11.5);//vent incli
-			glTranslatef(0,-30,0);
-			puerta(0.5,11.5);
-		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(7.5,0,59);
-			ventanaPorPisoCh(8.5,0.5);//vent horizo
+		/////////////////////////////////////////
+	glTranslatef(-3.75, -9, 0);
+	fig2.prisma(8, 31, 10.25, muro.GLindex); //ESCALERA
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(15.5, 30, 55);
+	glRotatef(-45, 0, 1.0, 0);
+	ventana3pisosConPuerta(0.5, 11.5);//vent incli
+	glTranslatef(0, -30, 0);
+	puerta(0.5, 11.5);
+	//////////////////////////// escaleras
+	glTranslatef(0, 0, 0);
+	glTranslatef(-6, -12, -1);
+	fig2.prisma(2, 27, 27, E1.GLindex);
+	glTranslatef(0, 2, 0);
+	fig2.prisma(2, 25, 25, E1.GLindex);
+	glTranslatef(0, 2, 0);
+	fig2.prisma(2, 23, 23, E1.GLindex);
+	glTranslatef(0, 2, 0);
+	fig2.prisma(2, 21, 21, E1.GLindex);
+
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(7.5, 0, 59);
+	ventanaPorPisoCh(8.5, 0.5);//vent horizo
+	////////////////////////////
+	glTranslatef(-3.75, -9, 0);
+	fig2.prisma(8, 20, 25, muro.GLindex);  //ESCALERA
 		glPopMatrix();
 		glPushMatrix();
 			glTranslatef(3,0,66.25);
@@ -1060,11 +1082,78 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			por eso lo pongo en el PUSH y POP para subirlo
 			*/
 			//codigo edificio
-			glPushMatrix();
-				glTranslatef(0,0,0);
-				techos();
-				muros();
-			glPopMatrix();
+			glTranslatef(0, 8, 61.75);
+	techos();
+	muros();
+	glPopMatrix();
+	//aqui podría continuar desde la base del escenario
+	glPushMatrix();
+	//glTranslatef(0, 2.5, 0);
+	glTranslatef(0, 4, 0);
+	//fig2.prisma(5, 78, 206.5, 0);
+	fig2.prisma(8, 78, 123.5, muro.GLindex);
+	glPopMatrix();
+
+
+	glPushMatrix();
+
+	glTranslatef(0, 4, 82.25);
+	fig2.prisma(8, 71, 41, muro.GLindex);
+
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glTranslatef(-16.150, 4, 123.75);
+	fig2.prisma(8, 38.75, 42, muro.GLindex);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 0, 0);
+	glTranslatef(-37.25, 0.5, 57.75);
+	fig2.prisma(1, 3.25, 30, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 28,E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 26, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 24, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 22, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 20, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 18, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 16, E1.GLindex);
+	glTranslatef(0, 0.5, 0);
+	fig2.prisma(1, 3.25, 14, E1.GLindex);
+
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glTranslatef(0, 0, 0);
+	glTranslatef(37.25, 0.5, 57.75);
+	fig2.prisma(1, 3.25, 30,E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 28, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 26, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 24, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 22, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 20, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 18, E1.GLindex);
+	glTranslatef(0, 1, 0);
+	fig2.prisma(1, 3.25, 16, E1.GLindex);
+	glTranslatef(0, 0.5, 0);
+	fig2.prisma(1, 3.25, 14, E1.GLindex);
+
+	glPopMatrix();
 			//codigo elevador
 			glPushMatrix();
 				glTranslatef(0,movelevador,-63.75);
