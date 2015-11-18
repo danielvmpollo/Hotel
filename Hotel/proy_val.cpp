@@ -9,7 +9,64 @@
 #include "texture.h"
 #include "figuras.h"
 #include "Camera.h"
+#include <time.h>
+#include "cmodel/CModel.h" 
 
+CFiguras fig3;
+CModel kit;
+CModel llanta;
+float posX =0, posY = 2.5, posZ =-3.5;
+#define MAX_FRAMES 9
+int i_max_steps = 90;
+int i_curr_steps = 0;
+typedef struct _frame
+{
+	//Variables para GUARDAR Key Frames
+	float posX;		//Variable para PosicionX
+	float posY;		//Variable para PosicionY
+	float posZ;		//Variable para PosicionZ
+	float incX;		//Variable para IncrementoX
+	float incY;		//Variable para IncrementoY
+	float incZ;		//Variable para IncrementoZ
+	
+
+	
+}FRAME;
+
+FRAME KeyFrame[MAX_FRAMES];
+int FrameIndex=5;			//introducir datos
+bool play=false;
+int playIndex=0;
+
+
+//NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
+
+int w = 500, h = 500;
+int frame=0,_time,timebase=0;
+char s[30];
+
+
+//Animación del coche
+float angRot = 0.0;
+float movKitX = 0.0;
+float movKitY = 0.0;
+float movKitZ = 0.0;
+float rotKit = 0.0;
+float rotKitX = 0.0;
+float rotTires = 0.0;
+bool g_fanimacion = false;
+bool g_avanza = false;
+
+bool circuito = false;
+bool recorrido1 = true;
+bool recorrido2 = false;
+bool recorrido3 = false;
+bool recorrido4 = false;
+bool recorrido5 = false;
+bool recorrido6 = false;
+bool recorrido7 = false;
+
+int timer = 0;
 
 //NEW//////////////////NEW//////////////////NEW//////////////////NEW////////////////
 CCamera objCamera; 
@@ -69,7 +126,13 @@ Inicio variables para el proyecto
 float entrepiso = 2;
 double movelevador=4.000000;
 double poselevador=4.000000;
-bool g_fanimacion = false;
+//bool g_fanimacion = false;
+
+float nubesAr[8][3];
+float incremento=0;
+bool inicio_prog = true;
+float largo_sky=300;
+float profundo_sky = 400;
 /*
 Fin variables para el proyecto
 */
@@ -141,7 +204,34 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	negro.ReleaseImage();
 
 
-	objCamera.Position_Camera(0,2.5f,7, 0,2.5f,0, 0, 1, 0);
+	objCamera.Position_Camera(0,10,10, 0,2.5f,0, 0, 1, 0);
+
+	kit._3dsLoad("kitt.3ds");	
+llanta._3dsLoad("k_rueda.3ds");
+
+
+	KeyFrame[0].posX = 0;
+	KeyFrame[0].posY = 2.5;
+	KeyFrame[0].posZ = -3.5;
+
+	KeyFrame[1].posX = 20;
+	KeyFrame[1].posY = 2.5;
+	KeyFrame[1].posZ = -3.5;
+
+
+	KeyFrame[2].posX = 20;
+	KeyFrame[2].posY = 2.5;
+	KeyFrame[2].posZ = 4.0;
+
+
+	KeyFrame[3].posX = 20;
+	KeyFrame[3].posY = 2.5;
+	KeyFrame[3].posZ = 4.0;
+
+
+	KeyFrame[4].posX = 20;
+	KeyFrame[4].posY = 2.5;
+	KeyFrame[4].posZ = 4.0;
 
 }
 
@@ -155,6 +245,58 @@ void pintaTexto(float x, float y, float z, void *font,char *string)
   {
     glutBitmapCharacter(font, *c); //imprime
   }
+}
+
+void nube(int x,int z,float r) 
+{
+	glPushMatrix();
+		glTranslatef(x,0,z);
+		glColor3f(1,1,1);
+		for (float i = 0; i < 360; i=i+60)
+		{
+			glPushMatrix();
+			glRotatef(i,1,0,0);
+			for (float j = 0; j < 180; j=j+30)
+			{
+				glPushMatrix();
+					glRotatef(-j+60,0,1,0);
+					glTranslatef(0,0,((4*r)/3)+(j/60));
+					fig2.esfera(r,5,5,0);
+				glPopMatrix();
+			}
+			glPopMatrix();
+		}
+	glPopMatrix();
+}
+void nubes()
+{
+	if(inicio_prog){
+		srand(time(NULL));
+		for (int i = 0; i < 8; i++)
+		{
+			nubesAr[i][0]=-130+rand()%271;
+			nubesAr[i][1]=-200+rand()%401;
+			nubesAr[i][2]=2+(rand()%6);
+		}
+		inicio_prog = false;
+	}
+	
+	for (int i = 0; i < 8; i++)
+	{
+		nube(nubesAr[i][0],nubesAr[i][1],nubesAr[i][2]);
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		nubesAr[i][0]++;
+		nubesAr[i][1]++;
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		if(nubesAr[i][0] > largo_sky/2)
+			nubesAr[i][0]=-largo_sky/2;
+		if(nubesAr[i][1] > profundo_sky/2)
+			nubesAr[i][1]=-profundo_sky/2;
+	}
 }
 
 /*
@@ -887,8 +1029,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPushMatrix(); //Creamos cielo
 				glColor3f(1.0, 1.0, 1.0);
 				glDisable(GL_LIGHTING);
-				//glTranslatef(0,60,0);
-				fig1.skybox(300.0, 250.0, 600.0,text1.GLindex);
+				glTranslatef(0,150,0);
+				fig1.skybox(largo_sky, 300.0, profundo_sky,text1.GLindex);
 				glEnable(GL_LIGHTING);
 			glPopMatrix();
 				
@@ -911,23 +1053,69 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPopMatrix();
 		
 			//Poner Figuras Aqui
-			//glColor3f(1.0, 1.0, 0.0);
-			//fig2.prisma(1.0, 1.0, 1.0, 0);
-			//fig2.esfera(1,12, 12, 0);  //Pueden mandar llamar nuevas figuras utilizando la variable fig2 y el operador punto
+			//Pueden mandar llamar nuevas figuras utilizando la variable fig2 y el operador punto
 			
 			/*
 			Falta hacer la parte de las escaleras de la entrada para lo cual todo se tendría que levantar N unidades
 			por eso lo pongo en el PUSH y POP para subirlo
 			*/
+			//codigo edificio
 			glPushMatrix();
 				glTranslatef(0,0,0);
 				techos();
 				muros();
 			glPopMatrix();
-			//aqui podría continuar desde la base del escenario
+			//codigo elevador
 			glPushMatrix();
 				glTranslatef(0,movelevador,-63.75);
 				elevator();
+			glPopMatrix();
+			//codigo carro
+			glPushMatrix();
+				glRotatef(90, 0, 1, 0);
+				glScalef(0.5, 0.5, 0.5);
+				glTranslatef(300, 0, -120);
+				glTranslatef(movKitX, movKitY+4, movKitZ);
+				glRotatef(rotKit, 0, 1, 0);
+				
+				glRotatef(rotKitX, 1, 0, 0);
+				
+
+				kit.GLrender(NULL,_SHADED,1.0); //Dibujamos la carroceria
+				//llanta.GLrender(NULL,_SHADED,1.0);
+
+				//Colocar aquí las llantas
+				glPushMatrix(); //llanta frontal der
+					glTranslatef(-6,-1,7.5);
+					glRotatef(-rotTires,1,0,0);
+					llanta.GLrender(NULL,_SHADED,1.0);
+				glPopMatrix();
+
+				glPushMatrix(); //llanta frontal izq
+					glTranslatef(6,-1,7.5);	
+					glRotatef(180,0,1,0);
+					glRotatef(rotTires,1,0,0);
+					llanta.GLrender(NULL,_SHADED,1.0);
+				glPopMatrix();
+				
+				glPushMatrix(); //llanta trasera der
+					glTranslatef(-6,-1,-9.5);	
+					glRotatef(-rotTires,1,0,0);
+					llanta.GLrender(NULL,_SHADED,1.0);
+				glPopMatrix();
+
+				glPushMatrix(); //llanta trasera izq
+					glTranslatef(6,-1,-9.5);	
+					glRotatef(180,0,1,0);
+					glRotatef(rotTires,1,0,0);
+					llanta.GLrender(NULL,_SHADED,1.0);
+				glPopMatrix();
+
+			glPopMatrix();
+			//codigo nubes
+			glPushMatrix();
+				glTranslatef(0,200,0);
+				nubes();
 			glPopMatrix();
 
 		glPopMatrix();
@@ -981,12 +1169,103 @@ void animacion()//Para que el elevador se mueva
 				movelevador=floor(movelevador);
 		}
 	}
+
+	fig3.text_izq-= 0.01;
+	fig3.text_der-= 0.01;
+	if(fig3.text_izq<-1)
+		fig3.text_izq=0;
+	if(fig3.text_der<0)
+		fig3.text_der=1;
+
+	
+		if(g_fanimacion)
+	{
+		if(g_avanza)
+		{
+			movKitZ +=1.0;
+			rotTires -= 20;
+			if(movKitZ>130)
+				g_avanza = false;
+		}
+		else
+		{
+			movKitZ -=1.0;
+			rotTires += 20;
+			if(movKitZ<0)
+				g_avanza = true;
+		}
+	}
+
+	if(circuito)
+	{
+		if(recorrido1)
+		{
+			movKitZ=movKitZ+2;
+			rotTires -= 20;
+			if(movKitZ>240)
+			{
+				recorrido1 = false;
+				recorrido2=true;
+				
+			}
+		}
+
+		if(recorrido2)
+		{
+			rotKit = -90;
+			movKitX=movKitX-2;
+			rotTires -= 20;
+			if(movKitX <-500)
+			{
+				recorrido2 = false;
+				recorrido3 = true;
+				
+			}
+		}
+		if(recorrido3)
+		{
+			rotKit = -180;
+			movKitZ=movKitZ-2;
+			rotTires -= 20;
+			if(movKitZ< 0)
+			{
+				recorrido3 = false;
+				recorrido4 = true;
+			}
+		}
+		if(recorrido4)
+		{
+			rotKit = -270;
+			movKitX=movKitX+2;
+			rotTires -= 20;
+			if(movKitX>0)
+			{
+				rotKit = 360;
+				recorrido4 = false;
+				recorrido1 = true;
+			}
+		}
+		
+	}
+	
+	frame++;
+	_time=glutGet(GLUT_ELAPSED_TIME);
+	if (_time - timebase > 1000) {
+		sprintf(s,"FPS:%4.2f",frame*1000.0/(_time-timebase));
+		timebase = _time;		
+		frame = 0;
+	}
+
 	glutPostRedisplay();
 }
 
 void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 {
 	switch ( key ) {
+		case ' ':		//Poner algo en movimiento
+				circuito^= true; //Activamos/desactivamos la animacíon
+				g_fanimacion = false;
+			break;
 		case 'w':   //Movimientos de camara
 		case 'W':
 			objCamera.Move_Camera( CAMERASPEED+0.2 );
@@ -1089,6 +1368,7 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
 
 int main ( int argc, char** argv )   // Main Function
 {
+	PlaySound(TEXT("Prelude.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
   glutInitWindowSize  (500, 500);	// Tamaño de la Ventana
