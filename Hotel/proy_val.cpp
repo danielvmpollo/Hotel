@@ -1214,8 +1214,11 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 		glColor3f(1.0,0.0,0.0);
-		pintaTexto(-0.25, 0.23,-0.25,(void *)font,"Figuras");
-		pintaTexto(-0.25, 0.21,-0.25,(void *)font,"Crear modelos basicos");
+		pintaTexto(-0.25, 0.23,-0.25,(void *)font,"Proyecto Final Laboratorio");
+		pintaTexto(-0.25, 0.21,-0.25,(void *)font,"Garcia Castro Hector");
+		pintaTexto(-0.25, 0.19,-0.25,(void *)font,"Tobias Ramirez Diana Isadora");
+		pintaTexto(-0.25, 0.17,-0.25,(void *)font,"Villar Ramirez Josafat Omar");
+		pintaTexto(-0.25, 0.15,-0.25,(void *)font,"Villegas Moreno Zeuxis Daniel");
 		glColor3f(1.0,1.0,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
