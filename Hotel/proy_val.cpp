@@ -617,16 +617,105 @@ void muros(){
 		glPushMatrix();//escaleras
 			glTranslatef(0,31.5,-68.75);//el centro es 31.5 pero ya esta en 5
 			glPushMatrix();
-				glTranslatef(0,34,0);
-				fig2.prisma(5,12,0.5,muro.GLindex);//dibuja muro atras parte 1
+				glTranslatef(0,35,0);
+				fig2.prisma(3,12,0.5,muro.GLindex);//dibuja muro atras parte 1
 			glPopMatrix();
 			glPushMatrix();
-				glTranslatef(0,-2.5,0);
-				fig2.prisma(68,1,0.5,negro.GLindex);//dibuja muro atras parte 2
-				glTranslatef(-3.25,0,0);
-				fig2.prisma(68,5.5,0.5,elevador.GLindex);//dibuja muro atras parte 3
-				glTranslatef(6.5,0,0);
-				fig2.prisma(68,5.5,0.5,elevador.GLindex);//dibuja muro atras parte 3
+				glTranslatef(0,-32.5,0);
+				glPushMatrix();
+				/*animacion de abre y cierre de puertas*/
+					if(movelevador==poselevador && movelevador==4){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+					glTranslatef(0,5,0);
+					if(movelevador==poselevador && movelevador==14){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+					glTranslatef(0,5,0);
+					if(movelevador==poselevador && movelevador==24){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+					glTranslatef(0,5,0);
+					if(movelevador==poselevador && movelevador==34){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+					glTranslatef(0,5,0);
+					if(movelevador==poselevador && movelevador==44){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+					glTranslatef(0,5,0);
+					if(movelevador==poselevador && movelevador==54){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+					glTranslatef(0,5,0);
+					if(movelevador==poselevador && movelevador==64){
+						glTranslatef(0,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}else{
+						fig2.prisma(8,1,0.5,negro.GLindex);
+						glTranslatef(-3.25,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(6.5,0,0);
+						fig2.prisma(8,5.5,0.5,elevador.GLindex);
+						glTranslatef(-3.25,5,0);
+						fig2.prisma(entrepiso,12,0.5,muro.GLindex);
+					}
+				glPopMatrix();
+		
 			glPopMatrix();
 
 			glPushMatrix();
@@ -871,11 +960,15 @@ void muros(){
 			glTranslatef(0,4,0);
 			fig2.prisma(65,12,0.5,cristal.GLindex);//dibuja muro enfrente parte 2
 			glTranslatef(0,-36.5,0);
-			fig2.prisma(8,1,0.5,negro.GLindex);//dibuja muro enfrente parte 3
-			glTranslatef(-3.25,0,0);
-			fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 4
-			glTranslatef(6.5,0,0);
-			fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 5
+			if(movelevador==poselevador && movelevador==4){
+				
+			}else{
+				fig2.prisma(8,1,0.5,negro.GLindex);//dibuja muro enfrente parte 3
+				glTranslatef(-3.25,0,0);
+				fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 4
+				glTranslatef(6.5,0,0);
+				fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 5
+			}
 		glPopMatrix();
 		glTranslatef(-8,0,0);
 		fig2.prisma(73,4,0.5,cristal.GLindex);//dibuja muro enfrente parte 6
