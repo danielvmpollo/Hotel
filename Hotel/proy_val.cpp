@@ -59,6 +59,7 @@ CTexture audit;
 CTexture techo;
 CTexture elevador;
 CTexture negro;
+CTexture cristal;
 
 CFiguras fig1;
 CFiguras fig2;
@@ -77,7 +78,6 @@ Fin variables para el proyecto
 void InitGL ( GLvoid )     // Inicializamos parametros
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo	
-
 	glEnable(GL_TEXTURE_2D);
 
 	glShadeModel (GL_SMOOTH);
@@ -139,6 +139,10 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	negro.LoadTGA("Texturas/negro.tga");
 	negro.BuildGLTexture();
 	negro.ReleaseImage();
+
+	cristal.LoadTGA("Texturas/azul.tga");
+	cristal.BuildGLTexture();
+	cristal.ReleaseImage();
 
 
 	objCamera.Position_Camera(0,2.5f,7, 0,2.5f,0, 0, 1, 0);
@@ -624,31 +628,21 @@ void muros(){
 				glTranslatef(6.5,0,0);
 				fig2.prisma(68,5.5,0.5,elevador.GLindex);//dibuja muro atras parte 3
 			glPopMatrix();
+
 			glPushMatrix();
 				glTranslatef(-8,0,0);
 				muros6P(4,0.5);//dibuja muro atras parte 5
 				glTranslatef(16,0,0);
 				muros6P(4,0.5);//dibuja muro atras parte 6
-				glTranslatef(0,0,10);
-				muros6P(4,0.5);//dibuja muro enfrente parte 1
-				glTranslatef(-8,0,0);
-				glPushMatrix();
-					glTranslatef(0,4,0);
-					fig2.prisma(65,12,0.5,muro.GLindex);//dibuja muro enfrente parte 2
-					glTranslatef(0,-36.5,0);
-					fig2.prisma(8,1,0.5,negro.GLindex);//dibuja muro enfrente parte 3
-					glTranslatef(-3.25,0,0);
-					fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 4
-					glTranslatef(6.5,0,0);
-					fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 5
-				glPopMatrix();
-				glTranslatef(-8,0,0);
-				muros6P(4,0.5);//dibuja muro enfrente parte 6
 			glPopMatrix();
-			glTranslatef(-10.25,0,5);
-			muros6P(0.5,10.5);//dibuja muro izquierdo
-			glTranslatef(20.5,0,0);
-			muros6P(0.5,10.5);//dibuja muro derecho
+
+			glPushMatrix();
+				glTranslatef(-10.25,0,5);
+				muros6P(0.5,10.5);//dibuja muro izquierdo
+				glTranslatef(20.5,0,0);
+				muros6P(0.5,10.5);//dibuja muro derecho
+			glPopMatrix();
+
 		glPopMatrix();
 		glPushMatrix();
 			glTranslatef(-14.5,0,-63.5);
@@ -866,13 +860,34 @@ void muros(){
 		glTranslatef(19.5,15,62);
 		fig2.prisma(20,32,42,audit.GLindex);//auditorio
 	glPopMatrix();
+	
+	glTranslatef(0,31.5,-68.75);//el centro es 31.5 pero ya esta en 5
+
+	glPushMatrix();
+		glTranslatef(8,0,10);
+		fig2.prisma(73,4,0.5,cristal.GLindex);//dibuja muro enfrente parte 1
+		glTranslatef(-8,0,0);
+		glPushMatrix();
+			glTranslatef(0,4,0);
+			fig2.prisma(65,12,0.5,cristal.GLindex);//dibuja muro enfrente parte 2
+			glTranslatef(0,-36.5,0);
+			fig2.prisma(8,1,0.5,negro.GLindex);//dibuja muro enfrente parte 3
+			glTranslatef(-3.25,0,0);
+			fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 4
+			glTranslatef(6.5,0,0);
+			fig2.prisma(8,5.5,0.5,elevador.GLindex);//dibuja muro enfrente parte 5
+		glPopMatrix();
+		glTranslatef(-8,0,0);
+		fig2.prisma(73,4,0.5,cristal.GLindex);//dibuja muro enfrente parte 6
+	glPopMatrix();
 
 }
 
 void display ( void )   // Creamos la funcion donde se dibuja
 {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glLoadIdentity();
 
 	glPushMatrix();	
@@ -919,16 +934,18 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			Falta hacer la parte de las escaleras de la entrada para lo cual todo se tendría que levantar N unidades
 			por eso lo pongo en el PUSH y POP para subirlo
 			*/
+			glColor3f(1,1,1);
+			glPushMatrix();
+				glTranslatef(0,movelevador,-63.75);
+				elevator();
+			glPopMatrix();
+
 			glPushMatrix();
 				glTranslatef(0,0,0);
 				techos();
 				muros();
 			glPopMatrix();
 			//aqui podría continuar desde la base del escenario
-			glPushMatrix();
-				glTranslatef(0,movelevador,-63.75);
-				elevator();
-			glPopMatrix();
 
 		glPopMatrix();
 	glPopMatrix();
@@ -936,6 +953,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 		glColor3f(1.0,0.0,0.0);
 		pintaTexto(-0.25, 0.23,-0.25,(void *)font,"Figuras");
 		pintaTexto(-0.25, 0.21,-0.25,(void *)font,"Crear modelos basicos");
