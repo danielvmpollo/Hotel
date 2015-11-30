@@ -1,0 +1,57 @@
+﻿Compilación iniciada a las 18/11/2015 12:18:27 p. m..
+     1>Proyecto "C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Hotel\Hotel.vcxproj" en el nodo 2 (Build destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Iinclude /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp figuras.cpp proy_val.cpp texture.cpp
+         Camera.cpp
+         figuras.cpp
+     1>figuras.cpp(294): warning C4101: 'phi' : variable local sin referencia
+     1>figuras.cpp(294): warning C4101: 'theta' : variable local sin referencia
+         proy_val.cpp
+     1>proy_val.cpp(1537): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : vea la declaración de 'sprintf'
+         texture.cpp
+     1>texture.cpp(12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(218) : vea la declaración de 'fopen'
+     1>texture.cpp(48): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\string.h(110) : vea la declaración de 'strcpy'
+     1>texture.cpp(84): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(218) : vea la declaración de 'fopen'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Release\Hotel.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:lib glut32.lib cmodel/CModel.lib /NODEFAULTLIB:LIBCD.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Release\Hotel.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Release\Hotel.lib" /MACHINE:X86 /SAFESEH Release\Camera.obj
+         Release\figuras.obj
+         Release\proy_val.obj
+         Release\texture.obj
+     1>CModel.lib(GLRender.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
+         Generando código
+         Generación de código finalizada
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>glut32.lib(glut32.dll) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(GLRender.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(CModel.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(HandleStream.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(GFILoader.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(_3dsloader.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(CObject.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(imageload.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(VECTOR3D.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(VECTOR4D.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>CModel.lib(MATRIX4X4.obj) : error LNK2026: módulo no seguro de una imagen SAFESEH.
+     1>C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Release\Hotel.exe : fatal error LNK1281: No se puede generar la imagen SAFESEH.
+     1>Compilación del proyecto terminada "C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Hotel\Hotel.vcxproj" (Build destinos) -- ERROR.
+
+ERROR al compilar.
+
+Tiempo transcurrido 00:00:08.60

@@ -1,0 +1,10 @@
+﻿Compilación iniciada a las 18/11/2015 12:57:26 p. m..
+     1>Proyecto "C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Hotel\Hotel.vcxproj" en el nodo 2 (Build destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Iinclude /ZI /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp figuras.cpp proy_val.cpp texture.cpp
+     1>cl : Línea de comandos error D8016: las opciones de línea de comandos '/ZI' y '/O2' son incompatibles
+     1>Compilación del proyecto terminada "C:\Users\Daniel\Documents\Visual Studio 2012\Projects\Hotel-master\Hotel\Hotel.vcxproj" (Build destinos) -- ERROR.
+
+ERROR al compilar.
+
+Tiempo transcurrido 00:00:00.29
