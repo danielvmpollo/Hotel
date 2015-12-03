@@ -16,9 +16,15 @@
 CFiguras fig3;
 CModel kit;
 CModel llanta;
-float posX =0, posY = 2.5, posZ =-3.5;
-#define MAX_FRAMES 9
-int i_max_steps = 90;
+//Diana nuevo
+float posX = 0, posY = 2.5, posZ = -3.5, rotRodIzq = 0;
+float giroMonito = 0;
+float movBrazoDer = 0.0;
+float movBrazoIzq = 0.0;
+float rotRodDer = 0.0;
+#define MAX_FRAMES 20 
+int i_max_steps = 5;
+//Diana nuevo
 int i_curr_steps = 0;
 typedef struct _frame
 {
@@ -29,9 +35,18 @@ typedef struct _frame
 	float incX;		//Variable para IncrementoX
 	float incY;		//Variable para IncrementoY
 	float incZ;		//Variable para IncrementoZ
-	
-
-	
+	//Diana nuevo
+	float rotRodIzq;
+	float rotInc;
+	float giroMonito;
+	float giroMonitoInc;
+	float movBrazoDer;
+	float movBrazoDerInc;
+	float movBrazoIzq;
+	float movBrazoIzqInc;
+	float rotRodDer;
+	float rotRodDerInc;
+	//Diana nuevo
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
@@ -108,6 +123,9 @@ GLfloat m_amb2[] = { 0.0, 0.0, 0.0, 1.0 };				// Ambiental Light Values
 GLfloat m_s2[] = {22};
 
 CTexture text1;
+//diana nuevo
+CTexture text2;
+//diana nuevo
 CTexture tex;
 CTexture vent;
 CTexture muro;
@@ -122,6 +140,9 @@ CTexture cristal;
 CTexture pasto;
 CTexture mampara;
 CTexture escaleras;
+CTexture maceta_lado;
+CTexture maceta_arriba;
+CTexture planta;
 
 //variables de estación de trabajo
 CTexture madera;//mesa y silla
@@ -134,7 +155,9 @@ int contadorPantalla=0;
 
 CFiguras fig1;
 CFiguras fig2;
-
+//diana nuevo
+CFiguras fig7;
+//diana nuevo
 /*
 Inicio variables para el proyecto
 */
@@ -178,6 +201,12 @@ void InitGL ( GLvoid )     // Inicializamos parametros
     text1.LoadBMP("Texturas/01.bmp");
 	text1.BuildGLTexture();
 	text1.ReleaseImage();
+
+	//Diana nuevo
+	text2.LoadTGA("Texturas/superman.tga");
+	text2.BuildGLTexture();
+	text2.ReleaseImage();
+	//Diana nuevo
 
 	tex.LoadTGA("Texturas/f6.tga");
 	tex.BuildGLTexture();
@@ -261,36 +290,154 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	escaleras.BuildGLTexture();
 	escaleras.ReleaseImage();
 
+	planta.LoadTGA("Texturas/planta.tga");
+	planta.BuildGLTexture();
+	planta.ReleaseImage();
+
+	maceta_arriba.LoadTGA("Texturas/maceta_arriba.tga");
+	maceta_arriba.BuildGLTexture();
+	maceta_arriba.ReleaseImage();
+
+	maceta_lado.LoadTGA("Texturas/maceta_lado.tga");
+	maceta_lado.BuildGLTexture();
+	maceta_lado.ReleaseImage();
+
 	objCamera.Position_Camera(0,2.5f,7, 0,2.5f,0, 0, 1, 0);
 	//objCamera.Position_Camera(0,10,10, 0,2.5f,0, 0, 1, 0);
 
 	kit._3dsLoad("kitt.3ds");	
-llanta._3dsLoad("k_rueda.3ds");
-
-
-	KeyFrame[0].posX = 0;
+	llanta._3dsLoad("k_rueda.3ds");
+	//diana nuevo
+	KeyFrame[0].posX = 45;
 	KeyFrame[0].posY = 2.5;
-	KeyFrame[0].posZ = -3.5;
+	KeyFrame[0].posZ = 145;
+	KeyFrame[0].rotRodIzq = -15;
+	KeyFrame[0].giroMonito = 0;
+	KeyFrame[0].movBrazoDer = 54;
+	KeyFrame[0].rotRodDer = -15;
+	KeyFrame[0].movBrazoIzq = -54;
+ 
+	KeyFrame[1].posX = 60;
+	KeyFrame[1].posY = 4.0;
+	KeyFrame[1].posZ = 70;
+	KeyFrame[1].rotRodIzq = -10;
+	KeyFrame[1].giroMonito = 50.0;
+	KeyFrame[1].movBrazoDer = 20;
+	KeyFrame[1].rotRodDer = -10;
+	KeyFrame[1].movBrazoIzq = -54;
 
-	KeyFrame[1].posX = 20;
-	KeyFrame[1].posY = 2.5;
-	KeyFrame[1].posZ = -3.5;
+	KeyFrame[2].posX = 44;
+	KeyFrame[2].posY = 5.5;
+	KeyFrame[2].posZ = 140;
+	KeyFrame[2].rotRodIzq = 10;
+	KeyFrame[2].giroMonito = 100;
+	KeyFrame[2].movBrazoDer = 10;
+	KeyFrame[2].rotRodDer = 20;
+	KeyFrame[2].movBrazoIzq = -54;
+
+	KeyFrame[3].posX = 60;
+	KeyFrame[3].posY = 7.5;
+	KeyFrame[3].posZ = 70;
+	KeyFrame[3].rotRodIzq = 10.0;
+	KeyFrame[3].giroMonito = 150;
+	KeyFrame[3].movBrazoDer = 0;
+	KeyFrame[3].rotRodDer = 26;
+	KeyFrame[3].movBrazoIzq = -116;
 
 
-	KeyFrame[2].posX = 20;
-	KeyFrame[2].posY = 2.5;
-	KeyFrame[2].posZ = 4.0;
+	KeyFrame[4].posX = 44;
+	KeyFrame[4].posY = 9;
+	KeyFrame[4].posZ = 140;
+	KeyFrame[4].rotRodIzq = 10.0;
+	KeyFrame[4].giroMonito = 200;
+	KeyFrame[4].movBrazoDer = 64;
+	KeyFrame[4].rotRodDer = 26;
+	KeyFrame[4].movBrazoIzq = -116;
 
 
-	KeyFrame[3].posX = 20;
-	KeyFrame[3].posY = 2.5;
-	KeyFrame[3].posZ = 4.0;
+	KeyFrame[5].posX = 60;
+	KeyFrame[5].posY = 12;
+	KeyFrame[5].posZ = 70;
+	KeyFrame[5].rotRodIzq = 0;
+	KeyFrame[5].giroMonito = 220;
+	KeyFrame[5].movBrazoDer = 0;
+	KeyFrame[5].rotRodDer = 0;
+	KeyFrame[5].movBrazoIzq = -116;
 
+	KeyFrame[6].posX = 80;
+	KeyFrame[6].posY = 15;
+	KeyFrame[6].posZ = 140;
+	KeyFrame[6].rotRodIzq = 0;
+	KeyFrame[6].giroMonito = 280;
+	KeyFrame[6].movBrazoDer = 0;
+	KeyFrame[6].rotRodDer = 0;
+	KeyFrame[6].movBrazoIzq = -116;
 
-	KeyFrame[4].posX = 20;
-	KeyFrame[4].posY = 2.5;
-	KeyFrame[4].posZ = 4.0;
+	KeyFrame[7].posX = 60;
+	KeyFrame[7].posY = 17;
+	KeyFrame[7].posZ = 70.0;
+	KeyFrame[7].rotRodIzq = 0.0;
+	KeyFrame[7].giroMonito = 320;
+	KeyFrame[7].movBrazoDer = 0;
+	KeyFrame[7].rotRodDer = 0;
+	KeyFrame[7].movBrazoIzq = -116;
 
+	/////
+	KeyFrame[8].posX = 40;
+	KeyFrame[8].posY = 19;
+	KeyFrame[8].posZ = 135.0;
+	KeyFrame[8].rotRodIzq = 0.0;
+	KeyFrame[8].giroMonito = 350;
+	KeyFrame[8].movBrazoDer = 0;
+	KeyFrame[8].rotRodDer = 0;
+	KeyFrame[8].movBrazoIzq = -116;
+
+	KeyFrame[9].posX = 60;
+	KeyFrame[9].posY = 21;
+	KeyFrame[9].posZ = 70.0;
+	KeyFrame[9].rotRodIzq = 0.0;
+	KeyFrame[9].giroMonito = 360;
+	KeyFrame[9].movBrazoDer = 90;
+	KeyFrame[9].rotRodDer = 0;
+	KeyFrame[9].movBrazoIzq = -116;
+
+	KeyFrame[10].posX = 45;
+	KeyFrame[10].posY = 23;
+	KeyFrame[10].posZ = 135.0;
+	KeyFrame[10].rotRodIzq = 18.0;
+	KeyFrame[10].giroMonito = 350;
+	KeyFrame[10].movBrazoDer = 54;
+	KeyFrame[10].rotRodDer = 28;
+	KeyFrame[10].movBrazoIzq = -80;
+
+	/////
+	KeyFrame[11].posX = 80;
+	KeyFrame[11].posY = 25;
+	KeyFrame[11].posZ = 70.0;
+	KeyFrame[11].rotRodIzq = -18.0;
+	KeyFrame[11].giroMonito = 360;
+	KeyFrame[11].movBrazoDer = 40;
+	KeyFrame[11].rotRodDer = -10;
+	KeyFrame[11].movBrazoIzq = -80;
+
+	KeyFrame[12].posX = 40;
+	KeyFrame[12].posY = 27;
+	KeyFrame[12].posZ = 135.0;
+	KeyFrame[12].rotRodIzq = 18.0;
+	KeyFrame[12].giroMonito = 360;
+	KeyFrame[12].movBrazoDer = 40;
+	KeyFrame[12].rotRodDer = 28;
+	KeyFrame[12].movBrazoIzq = -36;
+
+	KeyFrame[13].posX = 100;
+	KeyFrame[13].posY = 2.5;
+	KeyFrame[13].posZ = 70.0;
+	KeyFrame[13].rotRodIzq = 18.0;
+	KeyFrame[13].giroMonito = 0;
+	KeyFrame[13].movBrazoDer = 54;
+	KeyFrame[13].rotRodDer = 28;
+	KeyFrame[13].movBrazoIzq = -80;
+	//diana nuevo
 }
 
 void pintaTexto(float x, float y, float z, void *font,char *string)
@@ -303,6 +450,123 @@ void pintaTexto(float x, float y, float z, void *font,char *string)
   {
     glutBitmapCharacter(font, *c); //imprime
   }
+}
+/*
+Funcion que dibuja monito
+*/
+//Diana nuevo
+void monito()
+{
+	//glNewList(1, GL_COMPILE);
+	glPushMatrix();//Pecho
+		glScalef(0.5, 0.5, 0.5);
+		fig7.prisma(2.0, 2.0, 1, text2.GLindex);
+
+		glPushMatrix();//Cuello
+			glTranslatef(0, 1.0, 0.0);
+			fig7.cilindro(0.25, 0.25, 15, 0);
+			glPushMatrix();//Cabeza
+				glTranslatef(0, 1.0, 0);
+				fig7.esfera(0.75, 15, 15, 0);
+			glPopMatrix();
+		glPopMatrix();
+
+		glPushMatrix(); //Brazo derecho-->
+			glTranslatef(1.25, 0.65, 0);
+			fig7.esfera(0.5, 12, 12, 0);
+			glPushMatrix();
+				glTranslatef(0.25, 0, 0);
+				glRotatef(-45, 0, 1, 0);
+				glRotatef(movBrazoDer, 0.0, 0.0, 1.0);
+				glTranslatef(0.75, 0, 0);
+				fig7.prisma(0.7, 1.5, 0.7, 0);
+			glPopMatrix();
+		glPopMatrix();
+
+		glPushMatrix(); //Brazo izquierdo <--
+			glTranslatef(-1.25, 0.65, 0);
+			fig7.esfera(0.5, 12, 12, 0);
+			glPushMatrix();
+				glTranslatef(-0.25, 0, 0);
+				glRotatef(45, 0, 1, 0);
+				glRotatef(25, 0, 0, 1);
+				glRotatef(movBrazoIzq, 0.0, 0.0, 1.0);
+				glRotatef(25, 1, 0, 0);
+				glTranslatef(-0.75, 0, 0);
+				fig7.prisma(0.7, 1.5, 0.7, 0);
+			glPopMatrix();
+		glPopMatrix();
+
+		glPushMatrix();//Cintura
+			glColor3f(0, 0, 1);
+			glTranslatef(0, -1.5, 0);
+			fig7.prisma(1, 2, 1, 0);
+
+			glPushMatrix(); //Pie Derecho -->
+				glTranslatef(0.75, -0.5, 0);
+				glRotatef(-15, 1, 0, 0);
+				glTranslatef(0, -0.5, 0);
+				fig7.prisma(1.0, 0.5, 1, 0);
+
+				glPushMatrix();
+					glTranslatef(0, -0.5, 0);
+					glRotatef(15 + rotRodDer, 1, 0, 0);
+					glTranslatef(0, -0.75, 0);
+					fig7.prisma(1.5, 0.5, 1, 0);
+
+					glPushMatrix();
+						glTranslatef(0, -0.75, 0.3);
+						fig7.prisma(0.2, 1.2, 1.5, 0);
+					glPopMatrix();
+				glPopMatrix();
+			glPopMatrix();
+
+			glPushMatrix(); //Pie Izquierdo -->
+				glTranslatef(-0.75, -0.5, 0);
+				glRotatef(-5, 1, 0, 0);
+				glTranslatef(0, -0.5, 0);
+				fig7.prisma(1.0, 0.5, 1, 0);
+
+				glPushMatrix();
+					glTranslatef(0, -0.5, 0);
+					glRotatef(15 + rotRodIzq, 1, 0, 0);
+					glTranslatef(0, -0.75, 0);
+					fig7.prisma(1.5, 0.5, 1, 0);
+
+					glPushMatrix();
+						glTranslatef(0, -0.75, 0.3);
+						fig7.prisma(0.2, 1.2, 1.5, 0);
+					glPopMatrix();
+				glPopMatrix();
+			glPopMatrix();
+
+
+		glPopMatrix();
+
+
+		glColor3f(1, 1, 1);
+	glPopMatrix();
+	//glEndList();
+}
+//Diana nuevo
+/*
+Función para dibujar maceta, recibe largo, profundidad y altura
+*/
+void maceta(float largo, float profundidad, float altura)
+{
+	float _altoMaceta = altura/3;
+	float _altoPlanta = 2*_altoMaceta;
+
+	glPushMatrix();
+		glTranslatef(0,_altoMaceta/2,0);//sube al centro de la maceta
+		fig2.laptopT(_altoMaceta,largo,profundidad,maceta_lado.GLindex,maceta_arriba.GLindex);
+		glTranslatef(0,1.5*_altoMaceta,0);//sube al centro de la planta
+		for (int i = 0; i < 180; i=i+30)
+		{
+			glRotatef(i,0,1,0);
+			fig2.prisma(_altoPlanta,largo,0,planta.GLindex);
+		}
+	glPopMatrix();
 }
 /*
 Función para dibujar una laptop, recibe las medidas del contenedor de la laptop
@@ -502,86 +766,9 @@ void modulo(){
 	glPopMatrix();
 }
 /*
-Esta funcion dibuj las oficinas del quinto piso
+Esta funcion dibuja las oficinas del quinto piso
 */
 void oficinas(){
-	glPushMatrix();//aquí se acomodan las estaciones de trabajo
-		glTranslatef(-36,50,-68);
-		glPushMatrix();//estciones de trabajo
-			for (int i = 0; i < 57; i=i+8)
-			{
-				glPushMatrix();
-					glTranslatef(0,0,i);
-					glRotatef(90,0,1,0);
-					estTrab(3,3,3);//estación de trabajo i
-				glPopMatrix();
-			}
-		glPopMatrix();
-		glTranslatef(72,0,0);
-		glPushMatrix();
-			for (int i = 0; i < 57; i=i+8)
-			{
-				glPushMatrix();
-					glTranslatef(0,0,i);
-					glRotatef(-90,0,1,0);
-					estTrab(3,3,3);//estación de trabajo i
-				glPopMatrix();
-			}
-		glPopMatrix();
-		glTranslatef(-1.5,4,-2);//cubículos parte 1
-		glPushMatrix();
-			for (int i = 0; i < 57; i=i+8)
-			{
-				glPushMatrix();
-					glTranslatef(0,0,i);
-					fig2.prisma(8,8,0.5,mampara.GLindex);//cubículo i
-				glPopMatrix();
-			}
-			glTranslatef(0,0,64);
-			fig2.prisma(8,8,.5,mampara.GLindex);
-		glPopMatrix();
-		glTranslatef(-69,0,0);
-		glPushMatrix();
-			for (int i = 0; i < 57; i=i+8)
-			{
-				glPushMatrix();
-					glTranslatef(0,0,i);
-					fig2.prisma(8,8,0.5,mampara.GLindex);//cubículo i
-				glPopMatrix();
-			}
-			glTranslatef(0,0,64);
-			fig2.prisma(8,8,.5,mampara.GLindex);
-		glPopMatrix();
-		glTranslatef(3.75,-1,6.75);//cubiculos parte 2
-		glPushMatrix();
-			for (int i = 0; i < 57; i=i+8)
-			{
-				glPushMatrix();
-					glTranslatef(0,0,i);
-					fig2.prisma(6,.5,2,p2.GLindex);//cubículo i
-					glTranslatef(0,4,0);
-					fig2.prisma(2,.5,2,cristal.GLindex);//cubículo i
-					glTranslatef(0,-3,-3.75);
-					fig2.prisma(8,0.5,5.5,cristal.GLindex);//cubículo i
-				glPopMatrix();
-			}
-		glPopMatrix();
-		glTranslatef(61.5,0,0);//cubiculos parte 2
-		glPushMatrix();
-			for (int i = 0; i < 57; i=i+8)
-			{
-				glPushMatrix();
-					glTranslatef(0,0,i);
-					fig2.prisma(6,.5,2,p2.GLindex);//cubículo i
-					glTranslatef(0,4,0);
-					fig2.prisma(2,.5,2,cristal.GLindex);//cubículo i
-					glTranslatef(0,-3,-3.75);
-					fig2.prisma(8,0.5,5.5,cristal.GLindex);//cubículo i
-				glPopMatrix();
-			}
-		glPopMatrix();
-
-	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(0,50,-96);
 		glPushMatrix();
@@ -632,6 +819,113 @@ void oficinas(){
 			glTranslatef(-22.5,0,15);
 			modulo();
 		glPopMatrix();
+	glPopMatrix();
+	glPushMatrix();//aquí se acomodan las estaciones de trabajo
+		glTranslatef(-36,50,-68);
+		glPushMatrix();//estciones de trabajo
+			for (int i = 0; i < 57; i=i+8)
+			{
+				glPushMatrix();
+					glTranslatef(0,0,i);
+					glRotatef(90,0,1,0);
+					estTrab(3,3,3);//estación de trabajo i
+				glPopMatrix();
+			}
+		glPopMatrix();
+		glTranslatef(72,0,0);
+		glPushMatrix();
+			for (int i = 0; i < 57; i=i+8)
+			{
+				glPushMatrix();
+					glTranslatef(0,0,i);
+					glRotatef(-90,0,1,0);
+					estTrab(3,3,3);//estación de trabajo i
+				glPopMatrix();
+			}
+		glPopMatrix();
+		glTranslatef(-1.5,4,-2);//cubículos parte 1
+		glPushMatrix();
+			for (int i = 0; i < 57; i=i+8)
+			{
+				glPushMatrix();
+					glTranslatef(0,0,i);
+					fig2.prisma(8,8,0.5,mampara.GLindex);//cubículo i
+					glTranslatef(-15,-4,8);
+					maceta(2,2,2);
+				glPopMatrix();
+			}
+			glTranslatef(0,0,64);
+			fig2.prisma(8,8,.5,mampara.GLindex);
+		glPopMatrix();
+		glTranslatef(-69,0,0);
+		glPushMatrix();
+			for (int i = 0; i < 57; i=i+8)
+			{
+				glPushMatrix();
+					glTranslatef(0,0,i);
+					fig2.prisma(8,8,0.5,mampara.GLindex);//cubículo i
+					glTranslatef(15,-4,8);
+					maceta(2,2,2);
+				glPopMatrix();
+			}
+			glTranslatef(0,0,64);
+			fig2.prisma(8,8,.5,mampara.GLindex);
+		glPopMatrix();
+		glTranslatef(3.75,-1,6.75);//cubiculos parte 2
+		glPushMatrix();
+			for (int i = 0; i < 57; i=i+8)
+			{
+				glPushMatrix();
+					glTranslatef(0,0,i);
+					fig2.prisma(6,.5,2,p2.GLindex);//cubículo i
+					glTranslatef(0,4,0);
+					fig2.prisma(2,.5,2,cristal.GLindex);//cubículo i
+					glTranslatef(0,-3,-3.75);
+					fig2.prisma(8,0.5,5.5,cristal.GLindex);//cubículo i
+				glPopMatrix();
+			}
+		glPopMatrix();
+		glTranslatef(61.5,0,0);//cubiculos parte 2
+		glPushMatrix();
+			for (int i = 0; i < 57; i=i+8)
+			{
+				glPushMatrix();
+					glTranslatef(0,0,i);
+					fig2.prisma(6,.5,2,p2.GLindex);//cubículo i
+					glTranslatef(0,4,0);
+					fig2.prisma(2,.5,2,cristal.GLindex);//cubículo i
+					glTranslatef(0,-3,-3.75);
+					fig2.prisma(8,0.5,5.5,cristal.GLindex);//cubículo i
+				glPopMatrix();
+			}
+		glPopMatrix();
+
+	glPopMatrix();
+	glPushMatrix();//pone las macetas de la parte grande parte 1
+		glTranslatef(-37,50,-122);
+		maceta(2,2,2);
+		glTranslatef(18.5,0,0);
+		maceta(2,2,2);
+		glTranslatef(18.5,0,0);
+		maceta(2,2,2);
+		glTranslatef(18.5,0,0);
+		maceta(2,2,2);
+		glTranslatef(18.5,0,0);
+		maceta(2,2,2);
+	glPopMatrix();
+	glPushMatrix();//pone las macetas de la parte grande parte 2
+		glTranslatef(-37,50,-122);
+		glTranslatef(0,0,27);
+		maceta(2,2,2);
+		glTranslatef(0,0,23);
+		maceta(2,2,2);
+	glPopMatrix();
+	glPushMatrix();//pone las macetas de la parte grande parte 3
+		glTranslatef(s37,50,-122);
+		glTranslatef(0,0,27);
+		maceta(2,2,2);
+		glTranslatef(0,0,23);
+		maceta(2,2,2);
 	glPopMatrix();
 }
 
@@ -1662,7 +1956,7 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			//codigo elevador
 			//aqui podría continuar desde la base del escenario
 			//codigo carro
-			glColor3f(0,0,1);
+			
 			glPushMatrix();
 				glRotatef(90, 0, 1, 0);
 				glScalef(0.5, 0.5, 0.5);
@@ -1707,9 +2001,24 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glColor3f(1,1,1);
 			//codigo nubes
 			glPushMatrix();
+				glEnable(GL_COLOR_MATERIAL);
+				glColor3f(1, 1, 1);
 				glTranslatef(0,200,0);
 				nubes();
+				glDisable(GL_COLOR_MATERIAL);
 			glPopMatrix();
+			//diana nuevo
+			glPushMatrix();
+				glEnable(GL_COLOR_MATERIAL);
+				glColor3f(1, 1, 1);
+				//glScalef(0.5, 0.5, 0.5);
+				//monito();
+				glTranslatef(60, posY+0.1, 145);
+				glRotatef(giroMonito, 0, 1, 0);
+				monito();
+				glDisable(GL_COLOR_MATERIAL);
+			glPopMatrix();
+			//diana nuevo
 			glPushMatrix();
 				//codigo edificio
 				glTranslatef(0, 8, 61.75);
@@ -1852,6 +2161,57 @@ void animacion()//Para que el elevador se mueva
 		}
 		
 	}
+	//diana nuevo
+	//Movimiento del monito
+
+	if (play)
+	{
+
+		if (i_curr_steps >= i_max_steps) //end of animation between frames?
+		{
+			playIndex++;
+			if (playIndex>FrameIndex - 2)	//end of total animation?
+			{
+				printf("termina anim\n");
+				playIndex = 0;
+				play = false;
+			}
+			else //Next frame interpolations
+			{
+				i_curr_steps = 0; //Reset counter
+				//Interpolation                                                                       //cantidad de cuadros intermedios
+				KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].movBrazoDerInc = (KeyFrame[playIndex + 1].movBrazoDer - KeyFrame[playIndex].movBrazoDer) / i_max_steps;
+				KeyFrame[playIndex].movBrazoIzqInc = (KeyFrame[playIndex + 1].movBrazoIzq - KeyFrame[playIndex].movBrazoIzq) / i_max_steps;
+				KeyFrame[playIndex].rotRodDerInc = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+				 
+			}
+		}
+		else
+		{
+			//dibujar los cuadros intermedios
+			posX += KeyFrame[playIndex].incX;
+			posY += KeyFrame[playIndex].incY;
+			posZ += KeyFrame[playIndex].incZ;
+
+
+			rotRodIzq += KeyFrame[playIndex].rotInc;
+			giroMonito += KeyFrame[playIndex].giroMonitoInc;
+			movBrazoDer += KeyFrame[playIndex].movBrazoDerInc;
+			movBrazoIzq += KeyFrame[playIndex].movBrazoIzqInc;
+			rotRodDer += KeyFrame[playIndex].rotRodDerInc;
+
+	 
+
+			i_curr_steps++;
+		}
+
+	}
+	//diana nuevo
 	
 	frame++;
 	_time=glutGet(GLUT_ELAPSED_TIME);
@@ -1923,6 +2283,138 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			poselevador=64.000000;
 			g_fanimacion=true;
 			break;
+		//diana nuevo
+		case 'k':		//
+		case 'K':
+			if (FrameIndex<MAX_FRAMES)
+			{
+				printf("frameindex %d\n", FrameIndex);
+
+				KeyFrame[FrameIndex].posX = posX;
+				KeyFrame[FrameIndex].posY = posY;
+				KeyFrame[FrameIndex].posZ = posZ;
+
+				KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+				KeyFrame[FrameIndex].giroMonito = giroMonito;
+				KeyFrame[FrameIndex].movBrazoDer = movBrazoDer;
+				KeyFrame[FrameIndex].movBrazoIzq = movBrazoIzq;
+				KeyFrame[FrameIndex].rotRodDer = rotRodDer;
+
+				FrameIndex++;
+			}
+
+			break;
+
+		case 'l':
+		case 'L':
+			if (play == false && (FrameIndex>1))
+			{
+
+				posX = KeyFrame[0].posX;
+				posY = KeyFrame[0].posY;
+				posZ = KeyFrame[0].posZ;
+
+				rotRodIzq = KeyFrame[0].rotRodIzq;
+				giroMonito = KeyFrame[0].giroMonito;
+				movBrazoDer = KeyFrame[0].movBrazoDer;
+				movBrazoIzq = KeyFrame[0].movBrazoIzq;
+				rotRodDer = KeyFrame[0].rotRodDer;
+
+				//First Interpolation
+				KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
+				KeyFrame[playIndex].movBrazoDerInc = (KeyFrame[playIndex + 1].movBrazoDer - KeyFrame[playIndex].movBrazoDer) / i_max_steps;
+				KeyFrame[playIndex].movBrazoIzqInc = (KeyFrame[playIndex + 1].movBrazoIzq - KeyFrame[playIndex].movBrazoIzq) / i_max_steps;
+				KeyFrame[playIndex].rotRodDerInc = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+
+				play = true;
+				playIndex = 0;
+				i_curr_steps = 0;
+			}
+			else
+			{
+				play = false;
+			}
+			break;
+
+		case 'z':
+			posZ--;
+			printf("%f \n", posZ);
+			break;
+		case 'Z':
+			posZ++;
+			printf("%f \n", posZ);
+			break;
+		case 'Y':
+			posY++;
+			printf("%f \n", posY);
+			break;
+		case 'y':
+			posY--;
+			printf("%f \n", posY);
+			break;
+
+		case 'g':
+			posX--;
+			printf("%f \n", posX);
+			break;
+		case 'G':
+			posX++;
+			printf("%f \n", posX);
+			break;
+
+		case 'B':
+			rotRodIzq++;
+			printf("%f \n", rotRodIzq);
+			break;
+
+		case 'b':
+			rotRodIzq--;
+			printf("%f \n", rotRodIzq);
+			break;
+
+		case 'X':
+			rotRodDer++;
+			printf("%f \n", rotRodDer);
+			break;
+
+		case 'x':
+			rotRodDer--;
+			printf("%f \n", rotRodDer);
+			break;
+
+		case 'P':
+			giroMonito++;
+			printf("%f \n", giroMonito);
+			break;
+
+		case 'p':
+			giroMonito--;
+			printf("%f \n", giroMonito);
+			break;
+
+		case 'M':
+			movBrazoDer += 2.0;
+			printf("%f \n", movBrazoDer);
+			break;
+		case 'm':
+			movBrazoDer -= 2.0;
+			printf("%f \n", movBrazoDer);
+			break;
+
+		case 'Q':
+			movBrazoIzq += 2.0;
+			printf("%f \n", movBrazoIzq);
+			break;
+		case 'q':
+			movBrazoIzq -= 2.0;
+			printf("%f \n", movBrazoIzq);
+			break;
+			//diana nuevo
+
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
 			break;        
@@ -1970,9 +2462,126 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
   }
   glutPostRedisplay();
 }
+//Diana nuevo
+void menuKeyFrame(int id)
+{
+	switch (id)
+	{
+	case 0:
+		if (FrameIndex<MAX_FRAMES)
+		{
+			printf("frameindex %d\n", FrameIndex);
+
+			KeyFrame[FrameIndex].posX = posX;
+			KeyFrame[FrameIndex].posY = posY;
+			KeyFrame[FrameIndex].posZ = posZ;
+
+			KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+			KeyFrame[FrameIndex].giroMonito = giroMonito;
+			KeyFrame[FrameIndex].rotRodDer = rotRodDer;
+			KeyFrame[FrameIndex].movBrazoDer = movBrazoDer;
+			KeyFrame[FrameIndex].movBrazoIzq = movBrazoIzq;
+
+			FrameIndex++;
+		}
+
+
+		break;
+
+	case 1:
+		if (play == false && FrameIndex >1)
+		{
+
+			posX = KeyFrame[0].posX;
+			posY = KeyFrame[0].posY;
+			posZ = KeyFrame[0].posZ;
+
+			rotRodIzq = KeyFrame[0].rotRodIzq;
+			giroMonito = KeyFrame[0].giroMonito;
+			rotRodDer = KeyFrame[0].rotRodDer;
+			movBrazoDer = KeyFrame[0].movBrazoDer;
+			movBrazoIzq = KeyFrame[0].movBrazoIzq;
+
+
+			//First Interpolation
+			KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].rotRodDerInc = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+			KeyFrame[playIndex].movBrazoDerInc = (KeyFrame[playIndex + 1].movBrazoDer - KeyFrame[playIndex].movBrazoDer) / i_max_steps;
+			KeyFrame[playIndex].movBrazoIzqInc = (KeyFrame[playIndex + 1].movBrazoIzq - KeyFrame[playIndex].movBrazoIzq) / i_max_steps;
+
+
+			play = true;
+			playIndex = 0;
+			i_curr_steps = 0;
+		}
+		else
+		{
+			play = false;
+		}
+		break;
+
+
+	case 2:
+		if (play == false && FrameIndex >1)
+		{
+
+			posX = KeyFrame[0].posX;
+			posY = KeyFrame[0].posY;
+			posZ = KeyFrame[0].posZ;
+
+			rotRodIzq = KeyFrame[0].rotRodIzq;
+			giroMonito = KeyFrame[0].giroMonito;
+			rotRodDer = KeyFrame[0].rotRodDer;
+			movBrazoDer = KeyFrame[0].movBrazoDer;
+			movBrazoIzq = KeyFrame[0].movBrazoIzq;
+
+
+			//First Interpolation
+			KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
+			KeyFrame[playIndex].rotRodDerInc = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+			KeyFrame[playIndex].movBrazoDerInc = (KeyFrame[playIndex + 1].movBrazoDer - KeyFrame[playIndex].movBrazoDer) / i_max_steps;
+			KeyFrame[playIndex].movBrazoIzqInc = (KeyFrame[playIndex + 1].movBrazoIzq - KeyFrame[playIndex].movBrazoIzq) / i_max_steps;
+
+			play = true;
+			playIndex = 0;
+			i_curr_steps = 0;
+		}
+		else
+		{
+			play = false;
+		}
+		break;
+
+
+	}
+}
+
+void menu(int id)
+{
+	/*switch (id)
+	{
+	case 1:
+	g_fanimacion^= true; //Activamos/desactivamos la animacíon
+	break;
+
+
+	}*/
+}
+//diana nuevo
 
 int main ( int argc, char** argv )   // Main Function
 {
+	//diana nuevo
+	int submenu;
+	//diana nuevo
 	PlaySound(TEXT("Prelude.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
   glutInit            (&argc, argv); // Inicializamos OpenGL
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
@@ -1986,7 +2595,17 @@ int main ( int argc, char** argv )   // Main Function
   glutReshapeFunc     ( reshape );	//Indicamos a Glut función en caso de cambio de tamano
   glutKeyboardFunc    ( keyboard );	//Indicamos a Glut función de manejo de teclado
   glutSpecialFunc     ( arrow_keys );	//Otras
-glutIdleFunc		  ( animacion );
+  glutIdleFunc		  ( animacion );
+  //Diana nuevo
+	submenu = glutCreateMenu(menuKeyFrame);
+ 
+	glutAddMenuEntry("Guardar KeyFrame", 0);
+	glutAddMenuEntry("Reproducir Animacion", 1);
+	glutCreateMenu(menu);
+	glutAddSubMenu("Animacion Monito", submenu); 
+
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	//Diana nuevo
   glutMainLoop        ( );          // 
 
   return 0;
